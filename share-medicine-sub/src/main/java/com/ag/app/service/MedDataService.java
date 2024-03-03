@@ -4,6 +4,8 @@ package com.ag.app.service;
 import com.ag.app.dao.MedDataRepository;
 import com.ag.app.entity.MedDataEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +15,7 @@ import java.util.Date;
 
 @Component
 public class MedDataService {
-
+    static Logger logger = LoggerFactory.getLogger(MedDataService.class);
     @Autowired
     private MedDataRepository medDataRepository;
 
@@ -35,8 +37,9 @@ public class MedDataService {
             medDataEntity.setMedicine_qty(med.medicine_qty);
             medDataEntity.setMedicine_validity(med.medicine_validity);
             MedDataEntity res = medDataRepository.save(medDataEntity);
+            logger.info(String.format("Successfully created record:%s", res.getId()));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
     }

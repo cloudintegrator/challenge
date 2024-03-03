@@ -3,8 +3,17 @@ import ballerinax/rabbitmq;
 import ballerina/log;
 
 public type Medicine record{
-    string name;
-    string expiryDate;
+    string email;
+    string created;
+    string medicine_name;
+    int medicine_qty;
+    string medicine_validity;
+
+};
+
+public type Response record{
+    int status;
+    string message;
 };
 
 service / on new http:Listener(9090) {
@@ -21,14 +30,21 @@ service / on new http:Listener(9090) {
         log:printInfo("********** Service Initialized **********");
     }
 
+    resource function get health() returns string{
+        return "OK";
+    }
     
-    resource function post medicines(Medicine medicine) returns http:Accepted|error{
+    resource function post medicines(Medicine medicine) returns Response|error{
         check self.mqClient->publishMessage({
             content: medicine,
             routingKey: "MEDICINE.QUEUE"
         });
 
         log:printInfo("********** Medicine information posted successfully **********");
-        return http:ACCEPTED;
+        Response r={
+            status: 201,
+            message: "Sent data to Rabbit MQ"
+        };
+        return r;
     }
 }
