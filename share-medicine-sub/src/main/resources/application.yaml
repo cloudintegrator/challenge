@@ -1,0 +1,7 @@
+cloudamqp:
+  host: "fish-01.rmq.cloudamqp.com"
+  port: "5672"
+  username: "aannimrm"
+  password: "B40g83-bYXRfan3MSsyi1DuQzvH_Nves"
+  virtualhost: "aannimrm"
+
