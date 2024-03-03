@@ -1,8 +1,10 @@
-package com.ag.app.service;
+package com.ag.app;
 
 
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class CloudAMQPConfiguration {
+public class AppConfiguration {
     @Value("${cloudamqp.host}")
     private String host;
     @Value("${cloudamqp.port}")
@@ -40,4 +42,11 @@ public class CloudAMQPConfiguration {
         return new Jackson2JsonMessageConverter();
     }
 
+//    @Bean
+//    public RabbitListenerContainerFactory<?> rabbitFactory(ConnectionFactory connectionFactory) {
+//        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+//        factory.setConnectionFactory(connectionFactory);
+//        factory.setDefaultRequeueRejected(false);
+//        return factory;
+//    }
 }
