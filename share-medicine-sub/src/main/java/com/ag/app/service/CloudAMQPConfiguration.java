@@ -3,9 +3,11 @@ package com.ag.app.service;
 
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 public class CloudAMQPConfiguration {
@@ -32,4 +34,10 @@ public class CloudAMQPConfiguration {
         connectionFactory.setVirtualHost(virtualHost);
         return connectionFactory;
     }
+
+    @Bean
+    public Jackson2JsonMessageConverter converter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
 }
