@@ -9,5 +9,5 @@ spring:
   datasource:
     url: "jdbc:mysql://mysql-3133c145-tesla.a.aivencloud.com:18801/defaultdb"
     driver: "com.mysql.cj.jdbc.Driver"
-    username: ""
-    password: ""
+    username: "avnadmin"
+    password: "AVNS_8EXQIdtLOu0IeqIM8My"
