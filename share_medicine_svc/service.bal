@@ -6,7 +6,7 @@ import ballerinax/mysql;
 import ballerinax/mysql.driver as _;
 
 public type Medicine record{|
-    int id;
+    int id?;
     string email;
     string created;
     string medicine_name;
