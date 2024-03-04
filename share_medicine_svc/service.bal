@@ -47,4 +47,8 @@ service / on new http:Listener(9090) {
         };
         return r;
     }
+
+    resource function get medicines() returns string{
+        return "TODO";
+    }
 }
