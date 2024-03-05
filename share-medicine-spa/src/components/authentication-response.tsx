@@ -66,6 +66,16 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                     </div>
                 ) }
             </div>
+            <div className="row">
+                    {derivedResponse?.accessToken && (
+                        <h5>
+                            <b>Access Token`</b>
+                            <div className="code">
+                                <code>{derivedResponse.accessToken}</code>
+                            </div>
+                        </h5>
+                    )}
+            </div>
         </>
     );
 };

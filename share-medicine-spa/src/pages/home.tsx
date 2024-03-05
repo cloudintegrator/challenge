@@ -13,6 +13,7 @@ interface DerivedState {
     idToken: string[],
     decodedIdTokenHeader: string,
     decodedIDTokenPayload: Record<string, string | number | boolean>;
+    accessToken: string
 }
 
 /**
@@ -31,7 +32,8 @@ export const HomePage: FunctionComponent = (): ReactElement => {
         getBasicUserInfo,
         getIDToken,
         getDecodedIDToken,
-        on
+        on,
+        getAccessToken
     } = useAuthContext();
 
     const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<DerivedState>(null);
@@ -52,12 +54,14 @@ export const HomePage: FunctionComponent = (): ReactElement => {
             const basicUserInfo = await getBasicUserInfo();
             const idToken = await getIDToken();
             const decodedIDToken = await getDecodedIDToken();
+            const accessToken = await getAccessToken();
 
             const derivedState: DerivedState = {
                 authenticateResponse: basicUserInfo,
                 idToken: idToken.split("."),
                 decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[0])),
-                decodedIDTokenPayload: decodedIDToken
+                decodedIDTokenPayload: decodedIDToken,
+                accessToken: accessToken
             };
 
             setDerivedAuthenticationState(derivedState);
