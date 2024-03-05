@@ -67,14 +67,14 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
           <br/>
           <br/>
-          <button className="button" onClick={handleSignIn}>Login</button>
+          <button  onClick={handleSignIn}>Login</button>
         </header>
       </div>
     );
   }
   return (
     <div className="App">
-     <h1>You are logged in.</h1>
+     <h1>Logged in: {user?.username}</h1>
     </div>
   );
 }
