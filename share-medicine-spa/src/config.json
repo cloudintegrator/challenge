@@ -1,7 +1,0 @@
-{
-    "clientID": "XGMnlyRvQXjY2FDfyYfGUUSZwj4a",
-    "baseUrl": "https://api.asgardeo.io/t/demoltda",
-    "signInRedirectURL": "https://localhost:3000",
-    "signOutRedirectURL": "https://localhost:3000",
-    "scope": [ "profile" ]
-}
