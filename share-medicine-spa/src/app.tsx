@@ -17,6 +17,7 @@ function App() {
   const [user, setUser] = useState<BasicUserInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const[token,setToken]=useState("");
 
   useEffect(() => {
     async function signInCheck() {
@@ -35,9 +36,12 @@ function App() {
       }
     });
   }, []);
+
   async function getUser() {
     setIsLoading(true);
     const userResponse = await getBasicUserInfo();
+    const token =await getAccessToken();
+    setToken(token);
     setUser(userResponse);
     setIsLoading(false);
   }
@@ -60,21 +64,20 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h1>
-            <p>
-            Unlock health: Share your unused meds.
-            </p>
+            <p>Unlock health: Share your unused meds.</p>
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
-          <br/>
-          <br/>
-          <button  onClick={handleSignIn}>Login</button>
+          <br />
+          <br />
+          <button onClick={handleSignIn}>Login</button>
         </header>
       </div>
     );
   }
   return (
     <div className="App">
-     <h1>Logged in: {user?.username}</h1>
+      <h1>Logged in: {user?.username}</h1>
+      <h1>Token: {token}</h1>
     </div>
   );
 }
