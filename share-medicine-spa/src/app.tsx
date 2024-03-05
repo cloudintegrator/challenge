@@ -56,13 +56,25 @@ function App() {
   }
 
   if (!signedIn) {
-    return <button onClick={handleSignIn}>Login</button>;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>
+            <p>
+            Unlock health: Share your unused meds.
+            </p>
+          </h1>
+          <img src={logo} className="App-logo" alt="logo" />
+          <br/>
+          <br/>
+          <button className="button" onClick={handleSignIn}>Login</button>
+        </header>
+      </div>
+    );
   }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+     <h1>You are logged in.</h1>
     </div>
   );
 }
