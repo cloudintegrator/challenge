@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BasicUserInfo, useAuthContext } from "@asgardeo/auth-react";
+import { Button } from "react-native";
 
 function App() {
   const {
@@ -17,7 +18,7 @@ function App() {
   const [user, setUser] = useState<BasicUserInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-  const[token,setToken]=useState("");
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     async function signInCheck() {
@@ -40,7 +41,7 @@ function App() {
   async function getUser() {
     setIsLoading(true);
     const userResponse = await getBasicUserInfo();
-    const token =await getAccessToken();
+    const token = await getAccessToken();
     setToken(token);
     setUser(userResponse);
     setIsLoading(false);
@@ -69,7 +70,7 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
           <br />
           <br />
-          <button onClick={handleSignIn}>Login</button>
+          <Button title="LOGIN" onPress={handleSignIn} />
         </header>
       </div>
     );
