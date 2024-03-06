@@ -11,6 +11,8 @@ import {
   Alert,
 } from "react-native";
 
+import { getMedicines as gm } from "./api/medicines/get-medicines";
+
 function App() {
   const {
     signIn,
@@ -39,6 +41,7 @@ function App() {
     signInCheck().then((res) => {
       if (res) {
         getUser();
+        getMedicines();
       } else {
         console.log("User has not signed in");
       }
@@ -52,6 +55,19 @@ function App() {
     setToken(token);
     setUser(userResponse);
     setIsLoading(false);
+  }
+
+  async function getMedicines() {
+    const flag= await isAuthenticated();
+    if (flag) {
+      setIsLoading(true);
+      const accessToken = await getAccessToken();
+      gm(accessToken).then((res) => {
+        let data=res.data;
+        console.log(data);
+        setIsLoading(false);
+      });
+    }
   }
 
   const handleSignIn = async () => {
@@ -69,15 +85,14 @@ function App() {
 
   if (!signedIn) {
     return (
-      <div >
+      <div>
         <header className="App-header">
           <h1>
             <p>Unlock health: Share your unused meds.</p>
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
-          <View>
-            <Button title="LOGIN" onPress={handleSignIn} />
-          </View>
+          {/* <button className="button" onClick={handleSignIn}>Login</button> */}
+          <Button title="LOGIN" onPress={handleSignIn}/>
         </header>
       </div>
     );
