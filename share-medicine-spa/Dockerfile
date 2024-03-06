@@ -1,8 +1,9 @@
 FROM node:18-alpine
 
 
-RUN useradd -r -u 10014 -g appuser appuser
-USER appuser
+RUN addgroup -g 10014 choreo && \
+    adduser  --disabled-password  --no-create-home --uid 10014 --ingroup choreo choreouser
+USER 10014
 
 WORKDIR /app
 
