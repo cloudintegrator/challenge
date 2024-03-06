@@ -1,5 +1,9 @@
 FROM node:18-alpine
 
+
+RUN useradd -r -u 10014 -g appuser appuser
+USER appuser
+
 WORKDIR /app
 
 
@@ -8,7 +12,7 @@ ENV DISABLE_DEV_SERVER_HOST_CHECK=true
 ENV HTTPS=false
 
 COPY . .
-USER 10014
+
 
 
 RUN npm install
