@@ -69,7 +69,7 @@ function App() {
 
   if (!signedIn) {
     return (
-      <div className="App">
+      <div >
         <header className="App-header">
           <h1>
             <p>Unlock health: Share your unused meds.</p>
