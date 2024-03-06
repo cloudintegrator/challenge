@@ -8,6 +8,7 @@ ENV DISABLE_DEV_SERVER_HOST_CHECK=true
 ENV HTTPS=false
 
 COPY . .
+USER 10014
 
 
 RUN npm install
