@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BasicUserInfo, useAuthContext } from "@asgardeo/auth-react";
-import { Button } from "react-native";
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Text,
+  Alert,
+} from "react-native";
 
 function App() {
   const {
@@ -68,9 +75,9 @@ function App() {
             <p>Unlock health: Share your unused meds.</p>
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
-          <br />
-          <br />
-          <Button title="LOGIN" onPress={handleSignIn} />
+          <View>
+            <Button title="LOGIN" onPress={handleSignIn} />
+          </View>
         </header>
       </div>
     );
