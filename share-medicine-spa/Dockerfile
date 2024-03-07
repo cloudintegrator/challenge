@@ -15,7 +15,7 @@ ENV HTTPS=false
 COPY . .
 USER 10014
 
-RUN mkdir node_modules && chmod -R 777 node_modules
+RUN chown 10014 .
 RUN npm install
 EXPOSE 3000
 CMD ["npm", "start"]
