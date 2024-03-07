@@ -50,12 +50,12 @@ service / on new http:Listener(9090) {
         return r;
     }
 
-    resource function get medicines(@http:Header authorization) returns Medicine[]|error? {
+    resource function get medicines(@http:Header string Authorization) returns Medicine[]|error? {
         // stream<Medicine, sql:Error?> medStream = self.db->query(`SELECT * FROM med_data`);
         // return from Medicine med in medStream
         //     select med;
         map<string|string> headers={
-            "Authorization": "Bearer " + authorization
+            "Authorization": "Bearer " + Authorization
         };
         http:Client httpClient = check new ("https://c219fb60-f3b7-4aca-a7d2-d62a3e1f1a5d-prod.e1-us-east-azure.choreoapis.dev");
         Medicine[] med=check httpClient-> get("/fwzo/sharemedicinesvc/endpoint-9090-803/v1.0/medicines",headers);
