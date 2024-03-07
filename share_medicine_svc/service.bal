@@ -50,7 +50,7 @@ service / on new http:Listener(9090) {
         return r;
     }
 
-    resource function get medicines(@http:Header string Authorization) returns Medicine[]|error? {
+    resource function get medicines() returns Medicine[]|error? {
         // stream<Medicine, sql:Error?> medStream = self.db->query(`SELECT * FROM med_data`);
         // return from Medicine med in medStream
         //     select med;
