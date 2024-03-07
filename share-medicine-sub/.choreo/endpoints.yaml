@@ -6,3 +6,8 @@ endpoints:
     type: REST
     networkVisibility: Public
     context: /
+  - name: medicines
+    port: 8080
+    type: REST
+    networkVisibility: Public
+    context: /

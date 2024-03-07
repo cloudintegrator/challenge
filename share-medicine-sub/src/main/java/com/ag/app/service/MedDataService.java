@@ -4,6 +4,7 @@ package com.ag.app.service;
 import com.ag.app.dao.MedDataRepository;
 import com.ag.app.entity.MedDataEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.catalina.LifecycleState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class MedDataService {
@@ -19,7 +22,8 @@ public class MedDataService {
     @Autowired
     private MedDataRepository medDataRepository;
 
-    public record MedDataDTO(@JsonProperty("email") String email,
+    public record MedDataDTO(@JsonProperty("id") Integer id,
+                             @JsonProperty("email") String email,
                              @JsonProperty("created") Date created,
                              @JsonProperty("medicine_name") String medicine_name,
                              @JsonProperty("medicine_qty") Integer medicine_qty,
@@ -41,7 +45,20 @@ public class MedDataService {
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
+    }
 
+    public List<MedDataDTO> getMedicines() {
+        List<MedDataEntity> list = medDataRepository.findAll();
+        final List<MedDataDTO> result = new ArrayList<>();
+        list.stream().forEach((item) -> {
+            result.add(new MedDataDTO(item.getId(),
+                    item.getEmail(),
+                    item.getCreated(),
+                    item.getMedicine_name(),
+                    item.getMedicine_qty(),
+                    item.getMedicine_validity()));
+        });
+        return result;
     }
 
 
