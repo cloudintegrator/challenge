@@ -1,9 +1,6 @@
 import ballerina/http;
 import ballerinax/rabbitmq;
 import ballerina/log;
-import ballerina/sql;
-import ballerinax/mysql;
-import ballerinax/mysql.driver as _;
 
 public type Medicine record{|
     int id?;
@@ -22,7 +19,7 @@ public type Response record{
 service / on new http:Listener(9090) {
     private final rabbitmq:ConnectionConfiguration connectionConfig;
     private final rabbitmq:Client mqClient;
-    private final mysql:Client db;
+    // private final mysql:Client db;
 
     function init() returns error?{
         self.connectionConfig={
@@ -31,7 +28,7 @@ service / on new http:Listener(9090) {
             virtualHost: "aannimrm"
         };
         self.mqClient=check new ("fish-01.rmq.cloudamqp.com",5672,self.connectionConfig);
-        self.db = check new ("mysql-3133c145-tesla.a.aivencloud.com", "avnadmin", "AVNS_8EXQIdtLOu0IeqIM8My", "defaultdb", 18801);
+        // self.db = check new ("mysql-3133c145-tesla.a.aivencloud.com", "avnadmin", "AVNS_8EXQIdtLOu0IeqIM8My", "defaultdb", 18801);
         log:printInfo("********** Service Initialized **********");
     }
 
@@ -53,9 +50,17 @@ service / on new http:Listener(9090) {
         return r;
     }
 
-    resource function get medicines() returns Medicine[] | error{
-        stream<Medicine, sql:Error?> medStream = self.db->query(`SELECT * FROM med_data`);
-        return from Medicine med in medStream
-            select med;
+    resource function get medicines(@http:Header Authorization) returns Medicine[]|error? {
+        // stream<Medicine, sql:Error?> medStream = self.db->query(`SELECT * FROM med_data`);
+        // return from Medicine med in medStream
+        //     select med;
+        map<string|string> headers={
+            "Authorization": "Bearer " + Authorization
+        };
+        http:Client httpClient = check new ("https://c219fb60-f3b7-4aca-a7d2-d62a3e1f1a5d-prod.e1-us-east-azure.choreoapis.dev");
+        Medicine[] med=check httpClient-> get("/fwzo/sharemedicinesvc/endpoint-9090-803/v1.0/medicines",headers);
+        //log:printInfo()
+        return med;
+        
     }
 }
