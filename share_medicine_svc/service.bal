@@ -55,7 +55,7 @@ service / on new http:Listener(9090) {
         // return from Medicine med in medStream
         //     select med;
         map<string|string> headers={
-            "Authorization": "Bearer " + Authorization
+            "Authorization": "Bearer "
         };
         http:Client httpClient = check new ("https://c219fb60-f3b7-4aca-a7d2-d62a3e1f1a5d-prod.e1-us-east-azure.choreoapis.dev");
         Medicine[] med=check httpClient-> get("/fwzo/sharemedicinesvc/endpoint-9090-803/v1.0/medicines",headers);
