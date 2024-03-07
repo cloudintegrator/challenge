@@ -2,9 +2,9 @@ FROM node:18-alpine
 
 # Build arguments for user/group configurations
 ARG USER=asgusr
-ARG USER_ID=10001
+ARG USER_ID=10014
 ARG USER_GROUP=asggrp
-ARG USER_GROUP_ID=10001
+ARG USER_GROUP_ID=10014
 ARG USER_HOME=/home/app
 
 # Create a user group and a user
