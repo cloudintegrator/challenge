@@ -1,19 +1,23 @@
-import React from 'react';
+
 import ReactDOM from 'react-dom/client';
+import React,{useState,useEffect} from 'react';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from "@asgardeo/auth-react";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+
+const authConfig = {
+  signInRedirectURL: "http://localhost:3000/",
+  signOutRedirectURL: "http://localhost:3000/",
+  clientID: "P1SAntMmc2eFLH5383fJ4So2aK4a",
+  baseUrl: "https://api.asgardeo.io/t/demoltda",
+  scope: ["openid", "profile"],
+};
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <AuthProvider config={authConfig}>
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
