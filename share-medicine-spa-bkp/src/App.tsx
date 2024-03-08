@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BasicUserInfo, useAuthContext } from "@asgardeo/auth-react";
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Text,
+  Alert,
+} from "react-native";
 
-
-
+import { getMedicines as gm } from "./api/medicines/get-medicines";
 
 function App() {
   const {
@@ -55,11 +62,11 @@ function App() {
     if (flag) {
       setIsLoading(true);
       const accessToken = await getAccessToken();
-      // gm(accessToken).then((res) => {
-      //   let data=res.data;
-      //   console.log(data);
-      //   setIsLoading(false);
-      // });
+      gm(accessToken).then((res) => {
+        let data=res.data;
+        console.log(data);
+        setIsLoading(false);
+      });
     }
   }
 
@@ -84,7 +91,8 @@ function App() {
             <p>Unlock health: Share your unused meds.</p>
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
-          <button className="button" onClick={handleSignIn}>Login</button>
+          {/* <button className="button" onClick={handleSignIn}>Login</button> */}
+          <Button title="LOGIN" onPress={handleSignIn}/>
         </header>
       </div>
     );

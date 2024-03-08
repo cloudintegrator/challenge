@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom/client';
 import React,{useState,useEffect} from 'react';
 import './index.css';
-import App from '.';
+import App from './App';
 import { AuthProvider } from "@asgardeo/auth-react";
 
 
