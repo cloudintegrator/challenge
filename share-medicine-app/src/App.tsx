@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BasicUserInfo, useAuthContext } from "@asgardeo/auth-react";
-
-
-
+import { getMedicines as gm } from "./api/medicines/get-medicines";
 
 function App() {
   const {
@@ -55,11 +53,11 @@ function App() {
     if (flag) {
       setIsLoading(true);
       const accessToken = await getAccessToken();
-      // gm(accessToken).then((res) => {
-      //   let data=res.data;
-      //   console.log(data);
-      //   setIsLoading(false);
-      // });
+      gm(accessToken).then((res) => {
+        let data=res.data;
+        console.log(data);
+        setIsLoading(false);
+      });
     }
   }
 
