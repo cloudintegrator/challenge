@@ -1,6 +1,6 @@
-package com.recargapay.repository;
+package com.recargapay.entity.repository;
 
-import com.recargapay.entity.UserEntity;
+import com.recargapay.entity.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.recargapay.utils;
+package com.recargapay.entity.utils;
 
 
 import org.springframework.http.HttpStatus;

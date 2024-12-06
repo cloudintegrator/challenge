@@ -1,8 +1,8 @@
-package com.recargapay.controller;
+package com.recargapay.entity.controller;
 
-import com.recargapay.dto.AppDTO;
-import com.recargapay.service.WalletService;
-import com.recargapay.utils.ApiResponse;
+import com.recargapay.entity.dto.AppDTO;
+import com.recargapay.entity.service.WalletService;
+import com.recargapay.entity.utils.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

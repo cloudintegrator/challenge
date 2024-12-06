@@ -1,13 +1,13 @@
-package com.recargapay.service;
+package com.recargapay.entity.service;
 
-import com.recargapay.dto.AppDTO;
-import com.recargapay.entity.TransactionEntity;
-import com.recargapay.entity.UserEntity;
-import com.recargapay.entity.WalletEntity;
-import com.recargapay.repository.TransactionRepository;
-import com.recargapay.repository.UserRepository;
-import com.recargapay.repository.WalletRepository;
-import com.recargapay.utils.CustomRuntimeException;
+import com.recargapay.entity.dto.AppDTO;
+import com.recargapay.entity.entity.TransactionEntity;
+import com.recargapay.entity.entity.UserEntity;
+import com.recargapay.entity.entity.WalletEntity;
+import com.recargapay.entity.repository.TransactionRepository;
+import com.recargapay.entity.repository.UserRepository;
+import com.recargapay.entity.repository.WalletRepository;
+import com.recargapay.entity.utils.CustomRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
