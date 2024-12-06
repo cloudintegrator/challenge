@@ -2,10 +2,9 @@ package com.recargapay.controller;
 
 import com.recargapay.dto.AppDTO;
 import com.recargapay.service.WalletService;
+import com.recargapay.utils.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/wallet")
@@ -15,23 +14,23 @@ public class WalletController {
     private WalletService walletService;
 
     @PostMapping("/create")
-    public AppDTO.WalletResponseDTO createWallet(@RequestBody AppDTO.WalletRequestDTO requestDTO) {
-        return walletService.createWallet(requestDTO);
+    public ApiResponse<AppDTO.WalletResponseDTO> createWallet(@RequestBody AppDTO.WalletRequestDTO requestDTO) {
+        return ApiResponse.success(walletService.createWallet(requestDTO), "Success");
     }
 
     @GetMapping("/{userName}/balance")
-    public AppDTO.WalletResponseDTO getBalance(@PathVariable String userName) {
-        return walletService.getBalance(userName);
+    public ApiResponse<AppDTO.WalletResponseDTO> getBalance(@PathVariable String userName) {
+        return ApiResponse.success(walletService.getBalance(userName), "Success");
     }
 
-    @GetMapping("/{userId}/historical-balance")
-    public AppDTO.WalletResponseDTO getHistoricalBalance(@PathVariable String userName, @RequestParam String dateTime) {
-        return walletService.getHistoricalBalance(userName, LocalDateTime.parse(dateTime));
-    }
+//    @GetMapping("/{userId}/historical-balance")
+//    public ApiResponse<AppDTO.WalletResponseDTO> getHistoricalBalance(@PathVariable String userName, @RequestParam String dateTime) {
+//        return walletService.getHistoricalBalance(userName, LocalDateTime.parse(dateTime));
+//    }
 
     @PostMapping("/{userId}/deposit")
-    public void depositFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
-        walletService.depositFunds(requestDTO.getUserName(), requestDTO.getAmount());
+    public ApiResponse<AppDTO.WalletResponseDTO> depositFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
+        return ApiResponse.success(walletService.depositFunds(requestDTO.getUserName(), requestDTO.getAmount()), "Success");
     }
 
     @PostMapping("/{userId}/withdraw")
