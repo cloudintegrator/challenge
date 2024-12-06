@@ -6,14 +6,14 @@ import lombok.Data;
 public class AppDTO {
     @Builder
     @Data
-    public class WalletRequestDTO {
+    public static class WalletRequestDTO {
         private String userName;
         private String email;
         private double balance;
     }
     @Data
     @Builder
-    public class WalletResponseDTO {
+    public static class WalletResponseDTO {
         private Long walletId;
         private String userName;
         private double balance;
@@ -21,14 +21,14 @@ public class AppDTO {
 
     @Data
     @Builder
-    public class DepositWithdrawRequestDTO {
+    public static class DepositWithdrawRequestDTO {
         private String userName;
         private double balance;
     }
 
     @Data
     @Builder
-    public class TransferRequestDTO {
+    public static class TransferRequestDTO {
         private Long senderId;
         private Long receiverId;
         private double balance;

@@ -41,7 +41,7 @@ public class WalletService {
     }
 
     public AppDTO.WalletResponseDTO getBalance(String userName) {
-        UserEntity userEntity = userRepository.findByUsername(userName);
+        UserEntity userEntity = userRepository.findByUserName(userName);
         AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
                 .userName(userName)
                 .balance(userEntity.getWalletEntity().getBalance())
@@ -50,13 +50,13 @@ public class WalletService {
     }
 
     public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDateTime dateTime) {
-        UserEntity userEntity = userRepository.findByUsername(userName);
+        UserEntity userEntity = userRepository.findByUserName(userName);
         List<TransactionEntity> transactionEntities = transactionRepository.findByUserId(userEntity.getId());
         return AppDTO.WalletResponseDTO.builder().build();
     }
 
     public void depositFunds(String userName, double balance) {
-        UserEntity userEntity = userRepository.findByUsername(userName);
+        UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             WalletEntity walletEntity = userEntity.getWalletEntity();
             if (null != walletEntity) {
