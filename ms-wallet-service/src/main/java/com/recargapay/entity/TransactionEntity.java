@@ -2,10 +2,7 @@ package com.recargapay.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -16,16 +13,23 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDateTime date;
 
+    @Column(nullable = false)
+    private double amount;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    @JoinColumn(name = "sender_id")
+    private UserEntity senderEntity;
 
-
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private UserEntity receiverEntity;
 }

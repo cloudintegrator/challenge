@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true,nullable = false)
@@ -27,8 +27,9 @@ public class UserEntity {
     @JoinColumn(name = "wallet_id")
     private WalletEntity walletEntity;
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<TransactionEntity> transactionEntities;
+    @OneToMany(mappedBy = "senderEntity")
+    private List<TransactionEntity> senderTransactionEntities;
 
-
+    @OneToMany(mappedBy = "receiverEntity")
+    private List<TransactionEntity> receiverTransactionEntities;
 }

@@ -31,17 +31,17 @@ public class WalletController {
 
     @PostMapping("/{userId}/deposit")
     public void depositFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
-        walletService.depositFunds(requestDTO.getUserName(), requestDTO.getBalance());
+        walletService.depositFunds(requestDTO.getUserName(), requestDTO.getAmount());
     }
 
     @PostMapping("/{userId}/withdraw")
     public void withdrawFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
-        walletService.withdrawFunds(requestDTO.getUserName(), requestDTO.getBalance());
+        walletService.withdrawFunds(requestDTO.getUserName(), requestDTO.getAmount());
     }
-//
-//    @PostMapping("/transfer")
-//    public void transferFunds(@RequestBody AppDTO.TransferRequestDTO requestDTO) {
-//        walletService.transferFunds(fromUserId, toUserId, amount);
-//    }
+
+    @PostMapping("/transfer")
+    public void transferFunds(@RequestBody AppDTO.TransferRequestDTO requestDTO) {
+        walletService.transferFunds(requestDTO.getSenderUserName(), requestDTO.getReceiverUserName(), requestDTO.getAmount());
+    }
 
 }

@@ -15,9 +15,9 @@ import lombok.*;
 public class WalletEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private double balance;
+    private double amount;
 
     @OneToOne(mappedBy = "walletEntity", fetch = FetchType.EAGER)
     private UserEntity userEntity;

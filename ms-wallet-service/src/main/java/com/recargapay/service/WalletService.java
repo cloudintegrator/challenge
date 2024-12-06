@@ -26,7 +26,7 @@ public class WalletService {
 
     public AppDTO.WalletResponseDTO createWallet(AppDTO.WalletRequestDTO requestDTO) {
         WalletEntity walletEntity = WalletEntity.builder()
-                .balance(requestDTO.getBalance())
+                .amount(requestDTO.getAmount())
                 .build();
         UserEntity userEntity = UserEntity.builder()
                 .userName(requestDTO.getUserName())
@@ -36,7 +36,7 @@ public class WalletService {
         userRepository.save(userEntity);
         AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
                 .walletId(walletEntity.getId())
-                .balance(walletEntity.getBalance())
+                .amount(walletEntity.getAmount())
                 .build();
         return responseDTO;
     }
@@ -45,39 +45,66 @@ public class WalletService {
         UserEntity userEntity = userRepository.findByUserName(userName);
         AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
                 .userName(userName)
-                .balance(userEntity.getWalletEntity().getBalance())
+                .amount(userEntity.getWalletEntity().getAmount())
                 .build();
         return responseDTO;
     }
 
     public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDateTime dateTime) {
         UserEntity userEntity = userRepository.findByUserName(userName);
-        List<TransactionEntity> transactionEntities = transactionRepository.findByUserId(userEntity.getId());
+        List<TransactionEntity> transactionEntities = transactionRepository.findBySenderUserId(userEntity.getId());
         return AppDTO.WalletResponseDTO.builder().build();
     }
 
-    public void depositFunds(String userName, double balance) {
+    public void depositFunds(String userName, double amount) {
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             WalletEntity walletEntity = userEntity.getWalletEntity();
             if (null != walletEntity) {
-                walletEntity.setBalance(walletEntity.getBalance() + balance);
+                walletEntity.setAmount(walletEntity.getAmount() + amount);
                 walletRepository.save(walletEntity);
             }
         }
     }
 
     @Transactional
-    public void withdrawFunds(String userName, double balance) {
+    public void withdrawFunds(String userName, double amount) {
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             WalletEntity walletEntity = userEntity.getWalletEntity();
-            if (walletEntity.getBalance() < balance) {
-                System.out.println("No balance");
+            if (walletEntity.getAmount() < amount) {
+                System.out.println("No amount");
             } else {
-                walletEntity.setBalance(walletEntity.getBalance() - balance);
+                walletEntity.setAmount(walletEntity.getAmount() - amount);
                 walletRepository.save(walletEntity);
             }
+        }
+    }
+
+    @Transactional
+    public void transferFunds(String senderUser, String receiverUser, double amount) {
+        UserEntity senderUserEntity = userRepository.findByUserName(senderUser);
+        UserEntity receiverUserEntity = userRepository.findByUserName(receiverUser);
+
+        if (null != senderUserEntity && null != receiverUserEntity) {
+            WalletEntity senderWalletEntity = senderUserEntity.getWalletEntity();
+            WalletEntity receiverWalletEntity = receiverUserEntity.getWalletEntity();
+
+            if (null != senderWalletEntity && null != receiverWalletEntity) {
+                if (senderWalletEntity.getAmount() >= amount) {
+                    withdrawFunds(senderUser, amount);
+                    depositFunds(receiverUser, amount);
+
+                    TransactionEntity transactionEntity = TransactionEntity.builder()
+                            .amount(amount)
+                            .date(LocalDateTime.now())
+                            .senderEntity(senderUserEntity)
+                            .receiverEntity(receiverUserEntity)
+                            .build();
+                    transactionRepository.save(transactionEntity);
+                }
+            }
+
         }
     }
 }

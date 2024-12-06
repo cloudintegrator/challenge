@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
-    @Query("SELECT t FROM TransactionEntity t WHERE t.userEntity.id = :user_id")
-    List<TransactionEntity> findByUserId(Long user_id);
+    @Query("SELECT t FROM TransactionEntity t WHERE t.senderEntity.id = :user_id")
+    List<TransactionEntity> findBySenderUserId(Long user_id);
 }
