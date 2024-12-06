@@ -1,13 +1,17 @@
 package com.recargapay.service;
 
+import com.recargapay.dto.AppDTO;
+import com.recargapay.entity.TransactionEntity;
 import com.recargapay.entity.UserEntity;
 import com.recargapay.entity.WalletEntity;
+import com.recargapay.repository.TransactionRepository;
 import com.recargapay.repository.UserRepository;
 import com.recargapay.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class WalletService {
@@ -16,22 +20,49 @@ public class WalletService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
-    public Long createWallet() {
+    public AppDTO.WalletResponseDTO createWallet(AppDTO.WalletRequestDTO requestDTO) {
         WalletEntity walletEntity = WalletEntity.builder()
-                .balance(100)
+                .balance(requestDTO.getBalance())
                 .build();
         UserEntity userEntity = UserEntity.builder()
-                .userName("Anupam")
-                .email("anupamgogoi@gmail.com")
+                .userName(requestDTO.getUserName())
+                .email(requestDTO.getEmail())
                 .walletEntity(walletEntity)
                 .build();
         userRepository.save(userEntity);
-        return walletEntity.getId();
+        AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
+                .walletId(walletEntity.getId())
+                .balance(walletEntity.getBalance())
+                .build();
+        return responseDTO;
     }
 
-    public void checkWallet(Long id){
-        Optional<WalletEntity> walletEntity=walletRepository.findById(id);
-        System.out.println(walletEntity.get().getBalance());
+    public AppDTO.WalletResponseDTO getBalance(String userName) {
+        UserEntity userEntity = userRepository.findByUsername(userName);
+        AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
+                .userName(userName)
+                .balance(userEntity.getWalletEntity().getBalance())
+                .build();
+        return responseDTO;
+    }
+
+    public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDateTime dateTime) {
+        UserEntity userEntity = userRepository.findByUsername(userName);
+        List<TransactionEntity> transactionEntities = transactionRepository.findByUserId(userEntity.getId());
+        return AppDTO.WalletResponseDTO.builder().build();
+    }
+
+    public void depositFunds(String userName, double balance) {
+        UserEntity userEntity = userRepository.findByUsername(userName);
+        if (null != userEntity) {
+            WalletEntity walletEntity = userEntity.getWalletEntity();
+            if (null != walletEntity) {
+                walletEntity.setBalance(walletEntity.getBalance() + balance);
+                walletRepository.save(walletEntity);
+            }
+        }
     }
 }

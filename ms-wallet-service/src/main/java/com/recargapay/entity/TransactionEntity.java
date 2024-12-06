@@ -20,12 +20,12 @@ public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDateTime date;
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private UserEntity sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private UserEntity receiver;
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
+
 }

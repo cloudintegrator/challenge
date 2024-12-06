@@ -4,12 +4,9 @@ package com.recargapay.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 
 @Entity
-@Table(name = "wallet")
+@Table(name = "wallets")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,7 +19,7 @@ public class WalletEntity {
     private Long id;
     private double balance;
 
-    @OneToOne(mappedBy = "walletEntity",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "walletEntity", fetch = FetchType.EAGER)
     private UserEntity userEntity;
 
 }

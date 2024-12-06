@@ -24,10 +24,8 @@ public class UserEntity {
     @JoinColumn(name = "wallet_id")
     private WalletEntity walletEntity;
 
-    @OneToMany(mappedBy = "sender")
-    private List<TransactionEntity> sentTransactions;
+    @OneToMany(mappedBy = "userEntity")
+    private List<TransactionEntity> transactionEntities;
 
-    @OneToMany(mappedBy = "receiver")
-    private List<TransactionEntity> receivedTransactions;
 
 }
