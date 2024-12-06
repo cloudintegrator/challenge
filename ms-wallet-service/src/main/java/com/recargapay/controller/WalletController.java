@@ -19,7 +19,7 @@ public class WalletController {
         return walletService.createWallet(requestDTO);
     }
 
-    @GetMapping("/{userId}/balance")
+    @GetMapping("/{userName}/balance")
     public AppDTO.WalletResponseDTO getBalance(@PathVariable String userName) {
         return walletService.getBalance(userName);
     }
@@ -34,10 +34,10 @@ public class WalletController {
         walletService.depositFunds(requestDTO.getUserName(), requestDTO.getBalance());
     }
 
-//    @PostMapping("/{userId}/withdraw")
-//    public void withdrawFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
-//        walletService.withdrawFunds(userId, amount);
-//    }
+    @PostMapping("/{userId}/withdraw")
+    public void withdrawFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
+        walletService.withdrawFunds(requestDTO.getUserName(), requestDTO.getBalance());
+    }
 //
 //    @PostMapping("/transfer")
 //    public void transferFunds(@RequestBody AppDTO.TransferRequestDTO requestDTO) {

@@ -9,6 +9,7 @@ import com.recargapay.repository.UserRepository;
 import com.recargapay.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,6 +62,20 @@ public class WalletService {
             WalletEntity walletEntity = userEntity.getWalletEntity();
             if (null != walletEntity) {
                 walletEntity.setBalance(walletEntity.getBalance() + balance);
+                walletRepository.save(walletEntity);
+            }
+        }
+    }
+
+    @Transactional
+    public void withdrawFunds(String userName, double balance) {
+        UserEntity userEntity = userRepository.findByUserName(userName);
+        if (null != userEntity) {
+            WalletEntity walletEntity = userEntity.getWalletEntity();
+            if (walletEntity.getBalance() < balance) {
+                System.out.println("No balance");
+            } else {
+                walletEntity.setBalance(walletEntity.getBalance() - balance);
                 walletRepository.save(walletEntity);
             }
         }
