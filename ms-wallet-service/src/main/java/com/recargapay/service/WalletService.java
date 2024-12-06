@@ -7,7 +7,6 @@ import com.recargapay.entity.WalletEntity;
 import com.recargapay.repository.TransactionRepository;
 import com.recargapay.repository.UserRepository;
 import com.recargapay.repository.WalletRepository;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +24,6 @@ public class WalletService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @Autowired
-    private EntityManager entityManager;
 
     public AppDTO.WalletResponseDTO createWallet(AppDTO.WalletRequestDTO requestDTO) {
         WalletEntity walletEntity = WalletEntity.builder()
@@ -68,7 +65,7 @@ public class WalletService {
                 walletEntity.setAmount(walletEntity.getAmount() + amount);
                 walletRepository.save(walletEntity);
             }
-            entityManager.refresh(userEntity);
+            userEntity=userRepository.findByUserName(userName);
             AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
                     .amount(userEntity.getWalletEntity().getAmount())
                     .build();
