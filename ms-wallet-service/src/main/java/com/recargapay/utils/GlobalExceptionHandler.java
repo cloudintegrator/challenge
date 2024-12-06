@@ -14,8 +14,9 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
-        return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    public ApiResponse<ResponseEntity<Map<String, Object>>> handleGenericException(Exception ex) {
+        return ApiResponse.error(buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()), ex.getLocalizedMessage(), 500);
+
     }
 
     private ResponseEntity<Map<String, Object>> buildResponseEntity(HttpStatus status, String message) {

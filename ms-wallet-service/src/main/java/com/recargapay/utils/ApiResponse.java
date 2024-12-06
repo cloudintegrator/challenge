@@ -19,7 +19,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(LocalDateTime.now(), 200, message, data);
     }
 
-    public static <T> ApiResponse<T> error(int status, String message) {
-        return new ApiResponse<>(LocalDateTime.now(), status, message, null);
+    public static <T> ApiResponse<T> error(T data, String message, int status) {
+        return new ApiResponse<>(LocalDateTime.now(), status, message, data);
     }
 }

@@ -53,8 +53,12 @@ public class WalletService {
 
     public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDateTime dateTime) {
         UserEntity userEntity = userRepository.findByUserName(userName);
-        List<TransactionEntity> transactionEntities = transactionRepository.findBySenderUserId(userEntity.getId());
-        return AppDTO.WalletResponseDTO.builder().build();
+        if (null != userEntity) {
+            List<TransactionEntity> transactionEntities = transactionRepository.findBySenderUserId(userEntity.getId());
+            return AppDTO.WalletResponseDTO.builder().build();
+        } else {
+            return null;
+        }
     }
 
     public AppDTO.WalletResponseDTO depositFunds(String userName, double amount) {

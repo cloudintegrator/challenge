@@ -6,6 +6,8 @@ import com.recargapay.utils.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/api/wallet")
 public class WalletController {
@@ -23,10 +25,10 @@ public class WalletController {
         return ApiResponse.success(walletService.getBalance(userName), "Success");
     }
 
-//    @GetMapping("/{userId}/historical-balance")
-//    public ApiResponse<AppDTO.WalletResponseDTO> getHistoricalBalance(@PathVariable String userName, @RequestParam String dateTime) {
-//        return walletService.getHistoricalBalance(userName, LocalDateTime.parse(dateTime));
-//    }
+    @GetMapping("/{userName}/historical-balance")
+    public void getHistoricalBalance(@PathVariable String userName, @RequestParam String dateTime) {
+        walletService.getHistoricalBalance(userName, LocalDateTime.parse(dateTime));
+    }
 
     @PostMapping("/{userId}/deposit")
     public ApiResponse<AppDTO.WalletResponseDTO> depositFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
