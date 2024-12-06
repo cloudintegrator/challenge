@@ -65,7 +65,7 @@ public class WalletService {
                 walletEntity.setAmount(walletEntity.getAmount() + amount);
                 walletRepository.save(walletEntity);
             }
-            userEntity=userRepository.findByUserName(userName);
+            userEntity = userRepository.findByUserName(userName);
             AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
                     .amount(userEntity.getWalletEntity().getAmount())
                     .build();
@@ -90,9 +90,10 @@ public class WalletService {
     }
 
     @Transactional
-    public void transferFunds(String senderUser, String receiverUser, double amount) {
+    public AppDTO.WalletResponseDTO transferFunds(String senderUser, String receiverUser, double amount) {
         UserEntity senderUserEntity = userRepository.findByUserName(senderUser);
         UserEntity receiverUserEntity = userRepository.findByUserName(receiverUser);
+        AppDTO.WalletResponseDTO responseDTO = null;
 
         if (null != senderUserEntity && null != receiverUserEntity) {
             WalletEntity senderWalletEntity = senderUserEntity.getWalletEntity();
@@ -110,9 +111,12 @@ public class WalletService {
                             .receiverEntity(receiverUserEntity)
                             .build();
                     transactionRepository.save(transactionEntity);
+                    responseDTO = AppDTO.WalletResponseDTO.builder()
+                            .amount(senderUserEntity.getWalletEntity().getAmount())
+                            .build();
                 }
             }
-
         }
+        return responseDTO;
     }
 }

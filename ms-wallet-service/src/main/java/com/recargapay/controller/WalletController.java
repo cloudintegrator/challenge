@@ -39,8 +39,8 @@ public class WalletController {
     }
 
     @PostMapping("/transfer")
-    public void transferFunds(@RequestBody AppDTO.TransferRequestDTO requestDTO) {
-        walletService.transferFunds(requestDTO.getSenderUserName(), requestDTO.getReceiverUserName(), requestDTO.getAmount());
+    public ApiResponse<AppDTO.WalletResponseDTO> transferFunds(@RequestBody AppDTO.TransferRequestDTO requestDTO) {
+        return ApiResponse.success(walletService.transferFunds(requestDTO.getSenderUserName(), requestDTO.getReceiverUserName(), requestDTO.getAmount()), "Success");
     }
 
 }
