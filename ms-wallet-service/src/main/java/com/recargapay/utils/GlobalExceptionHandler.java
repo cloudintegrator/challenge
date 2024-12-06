@@ -10,11 +10,17 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ApiResponse<ResponseEntity<Map<String, Object>>> handleGenericException(Exception ex) {
+        return ApiResponse.error(buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()), ex.getLocalizedMessage(), 500);
+
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ApiResponse<ResponseEntity<Map<String, Object>>> handleGenericRuntimeException(Exception ex) {
         return ApiResponse.error(buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()), ex.getLocalizedMessage(), 500);
 
     }

@@ -7,6 +7,7 @@ import com.recargapay.entity.WalletEntity;
 import com.recargapay.repository.TransactionRepository;
 import com.recargapay.repository.UserRepository;
 import com.recargapay.repository.WalletRepository;
+import com.recargapay.utils.CustomRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,11 +45,16 @@ public class WalletService {
 
     public AppDTO.WalletResponseDTO getBalance(String userName) {
         UserEntity userEntity = userRepository.findByUserName(userName);
-        AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
-                .userName(userName)
-                .amount(userEntity.getWalletEntity().getAmount())
-                .build();
-        return responseDTO;
+        if (null != userEntity) {
+            AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
+                    .userName(userName)
+                    .amount(userEntity.getWalletEntity().getAmount())
+                    .build();
+            return responseDTO;
+        } else {
+            throw new CustomRuntimeException("User does not exist");
+        }
+
     }
 
     public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDateTime dateTime) {
@@ -57,7 +63,7 @@ public class WalletService {
             List<TransactionEntity> transactionEntities = transactionRepository.findBySenderUserId(userEntity.getId());
             return AppDTO.WalletResponseDTO.builder().build();
         } else {
-            return null;
+            throw new RuntimeException("User does not exist");
         }
     }
 
@@ -68,14 +74,16 @@ public class WalletService {
             if (null != walletEntity) {
                 walletEntity.setAmount(walletEntity.getAmount() + amount);
                 walletRepository.save(walletEntity);
+                AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
+                        .amount(userEntity.getWalletEntity().getAmount())
+                        .build();
+                return responseDTO;
+            } else {
+                throw new RuntimeException("User does not have a wallet.");
             }
-            userEntity = userRepository.findByUserName(userName);
-            AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
-                    .amount(userEntity.getWalletEntity().getAmount())
-                    .build();
-            return responseDTO;
+
         } else {
-            return null;
+            throw new RuntimeException("User does not exist");
         }
     }
 
@@ -85,11 +93,13 @@ public class WalletService {
         if (null != userEntity) {
             WalletEntity walletEntity = userEntity.getWalletEntity();
             if (walletEntity.getAmount() < amount) {
-                System.out.println("No amount");
+                throw new RuntimeException("User does not have balance to withdraw");
             } else {
                 walletEntity.setAmount(walletEntity.getAmount() - amount);
                 walletRepository.save(walletEntity);
             }
+        } else {
+            throw new RuntimeException("User does not exist");
         }
     }
 
@@ -118,8 +128,14 @@ public class WalletService {
                     responseDTO = AppDTO.WalletResponseDTO.builder()
                             .amount(senderUserEntity.getWalletEntity().getAmount())
                             .build();
+                } else {
+                    throw new RuntimeException("Sender does not have enough balance");
                 }
+            } else {
+                throw new RuntimeException("Either sender or receiver's wallet does not exist");
             }
+        } else {
+            throw new RuntimeException("Either of sender or receiver does not exist");
         }
         return responseDTO;
     }
