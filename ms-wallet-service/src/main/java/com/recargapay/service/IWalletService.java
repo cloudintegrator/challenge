@@ -12,6 +12,6 @@ public interface IWalletService {
     AppDTO.WalletResponseDTO getBalance(String userName);
     AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDate date);
     AppDTO.WalletResponseDTO depositFunds(String userName, double amount);
-    void withdrawFunds(String userName, double amount);
+    AppDTO.WalletResponseDTO withdrawFunds(String userName, double amount);
     AppDTO.WalletResponseDTO transferFunds(String senderUser, String receiverUser, double amount);
 }

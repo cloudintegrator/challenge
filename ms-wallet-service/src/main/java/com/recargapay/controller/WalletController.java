@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @RequestMapping("/api/v1/wallet")
 public class WalletController {
 
-    private static final Logger logger= LogManager.getLogger(WalletController.class);
+    private static final Logger logger = LogManager.getLogger(WalletController.class);
     @Autowired
     private IWalletService walletService;
 
@@ -32,7 +32,7 @@ public class WalletController {
     @GetMapping("/{userName}/historical-balance")
     public ApiResponse<AppDTO.WalletResponseDTO> getHistoricalBalance(@PathVariable String userName, @RequestParam String date) {
         LocalDate localDate = LocalDate.parse(date);
-        return ApiResponse.success(walletService.getHistoricalBalance(userName, localDate),"Success");
+        return ApiResponse.success(walletService.getHistoricalBalance(userName, localDate), "Success");
     }
 
     @PostMapping("/{userId}/deposit")
@@ -41,8 +41,8 @@ public class WalletController {
     }
 
     @PostMapping("/{userId}/withdraw")
-    public void withdrawFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
-        walletService.withdrawFunds(requestDTO.getUserName(), requestDTO.getAmount());
+    public ApiResponse<AppDTO.WalletResponseDTO> withdrawFunds(@RequestBody AppDTO.DepositWithdrawRequestDTO requestDTO) {
+        return ApiResponse.success(walletService.withdrawFunds(requestDTO.getUserName(), requestDTO.getAmount()), "Success");
     }
 
     @PostMapping("/transfer")

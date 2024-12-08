@@ -98,7 +98,7 @@ public class WalletService implements IWalletService {
     }
 
     @Transactional
-    public void withdrawFunds(String userName, double amount) {
+    public AppDTO.WalletResponseDTO withdrawFunds(String userName, double amount) {
         logger.info("********** Withdrawing amount of " + amount + " from: " + userName);
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
@@ -108,6 +108,10 @@ public class WalletService implements IWalletService {
             } else {
                 walletEntity.setAmount(walletEntity.getAmount() - amount);
                 walletRepository.save(walletEntity);
+                AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
+                        .amount(userEntity.getWalletEntity().getAmount())
+                        .build();
+                return responseDTO;
             }
         } else {
             throw new RuntimeException("User does not exist");
