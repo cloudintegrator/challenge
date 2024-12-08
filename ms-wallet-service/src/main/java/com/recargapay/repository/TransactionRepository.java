@@ -13,6 +13,6 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
     @Query("SELECT t FROM TransactionEntity t WHERE t.senderEntity.id = :user_id")
     List<TransactionEntity> findBySenderUserId(Long user_id);
 
-    @Query("SELECT t FROM TransactionEntity t WHERE t.senderEntity.id = :user_id AND t.date = :date")
+    @Query("SELECT t FROM TransactionEntity t WHERE t.senderEntity.id = :user_id AND t.date = :date ORDER BY t.time DESC")
     List<TransactionEntity> findByUserAndDate(Long user_id, LocalDate date);
 }

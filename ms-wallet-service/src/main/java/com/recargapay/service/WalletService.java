@@ -69,7 +69,7 @@ public class WalletService implements IWalletService {
         if (null != userEntity) {
             List<TransactionEntity> transactionEntities = transactionRepository.findByUserAndDate(userEntity.getId(), date);
             return AppDTO.WalletResponseDTO.builder()
-                    .amount(transactionEntities.stream().findFirst().get().getAmount())
+                    .amount(transactionEntities.stream().findFirst().get().getSenderBalance())
                     .build();
         } else {
             throw new RuntimeException("User does not exist");
