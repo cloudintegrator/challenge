@@ -1,4 +1,4 @@
-package com.recargapay;
+package com.recargapay.repository;
 
 import com.recargapay.entity.UserEntity;
 import com.recargapay.entity.WalletEntity;
