@@ -1,6 +1,7 @@
 package com.recargapay.controller;
 
 import com.recargapay.dto.AppDTO;
+import com.recargapay.service.IWalletService;
 import com.recargapay.service.WalletService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class WalletControllerTest {
 
     @Mock
-    private WalletService walletService;
+    private IWalletService walletService;
 
     @InjectMocks
     private WalletController walletController;

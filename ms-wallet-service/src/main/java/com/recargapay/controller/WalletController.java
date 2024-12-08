@@ -1,8 +1,11 @@
 package com.recargapay.controller;
 
 import com.recargapay.dto.AppDTO;
+import com.recargapay.service.IWalletService;
 import com.recargapay.service.WalletService;
 import com.recargapay.utils.ApiResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +15,13 @@ import java.time.LocalDate;
 @RequestMapping("/api/wallet")
 public class WalletController {
 
+    private static final Logger logger= LogManager.getLogger(WalletController.class);
     @Autowired
-    private WalletService walletService;
+    private IWalletService walletService;
 
     @PostMapping("/create")
     public ApiResponse<AppDTO.WalletResponseDTO> createWallet(@RequestBody AppDTO.WalletRequestDTO requestDTO) {
+        logger.info(requestDTO);
         return ApiResponse.success(walletService.createWallet(requestDTO), "Success");
     }
 
