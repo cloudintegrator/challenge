@@ -42,5 +42,5 @@ tasks.named('test') {
 }
 
 springBoot {
-	mainClass = 'com.recargapay.'
+	mainClass = 'com.recargapay.WalletApplication'
 }
