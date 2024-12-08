@@ -4,7 +4,8 @@ package com.recargapay.entity.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Entity
@@ -20,10 +21,19 @@ public class TransactionEntity {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private LocalDate date;
+
+    @Column(nullable = false)
+    private LocalTime time;
 
     @Column(nullable = false)
     private double amount;
+
+    @Column(nullable = false)
+    private double senderBalance;
+
+    @Column(nullable = false)
+    private double receiverBalance;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")

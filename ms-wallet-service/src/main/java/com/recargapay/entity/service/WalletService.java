@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -56,11 +57,13 @@ public class WalletService {
 
     }
 
-    public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDateTime dateTime) {
+    public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDate date) {
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
-            List<TransactionEntity> transactionEntities = transactionRepository.findBySenderUserId(userEntity.getId());
-            return AppDTO.WalletResponseDTO.builder().build();
+            List<TransactionEntity> transactionEntities = transactionRepository.findByUserAndDate(userEntity.getId(), date);
+            return AppDTO.WalletResponseDTO.builder()
+                    .amount(transactionEntities.stream().findFirst().get().getAmount())
+                    .build();
         } else {
             throw new RuntimeException("User does not exist");
         }
@@ -119,9 +122,12 @@ public class WalletService {
 
                     TransactionEntity transactionEntity = TransactionEntity.builder()
                             .amount(amount)
-                            .date(LocalDateTime.now())
+                            .date(LocalDate.now())
+                            .time(LocalTime.now())
                             .senderEntity(senderUserEntity)
+                            .senderBalance(senderUserEntity.getWalletEntity().getAmount())
                             .receiverEntity(receiverUserEntity)
+                            .receiverBalance(receiverUserEntity.getWalletEntity().getAmount())
                             .build();
                     transactionRepository.save(transactionEntity);
                     responseDTO = AppDTO.WalletResponseDTO.builder()

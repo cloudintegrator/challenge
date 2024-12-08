@@ -3,12 +3,10 @@ package com.recargapay.entity.controller;
 import com.recargapay.entity.dto.AppDTO;
 import com.recargapay.entity.service.WalletService;
 import com.recargapay.entity.utils.ApiResponse;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/wallet")
@@ -28,8 +26,9 @@ public class WalletController {
     }
 
     @GetMapping("/{userName}/historical-balance")
-    public void getHistoricalBalance(@PathVariable String userName, @RequestParam String dateTime) {
-        walletService.getHistoricalBalance(userName, LocalDateTime.parse(dateTime));
+    public ApiResponse<AppDTO.WalletResponseDTO> getHistoricalBalance(@PathVariable String userName, @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return ApiResponse.success(walletService.getHistoricalBalance(userName, localDate),"Success");
     }
 
     @PostMapping("/{userId}/deposit")
