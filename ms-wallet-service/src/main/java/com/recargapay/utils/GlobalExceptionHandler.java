@@ -1,6 +1,8 @@
 package com.recargapay.utils;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,9 +15,11 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger logger= LogManager.getLogger(GlobalExceptionHandler.class);
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         ResponseEntity<Map<String, Object>> responseEntity = buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        logger.error(ex.getMessage());
         return responseEntity;
 
     }
@@ -23,8 +27,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleGenericRuntimeException(Exception ex) {
         ResponseEntity<Map<String, Object>> responseEntity = buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        logger.error(ex.getMessage());
         return responseEntity;
-
     }
 
     private ResponseEntity<Map<String, Object>> buildResponseEntity(HttpStatus status, String message) {

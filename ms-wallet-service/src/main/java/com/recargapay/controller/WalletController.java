@@ -2,7 +2,6 @@ package com.recargapay.controller;
 
 import com.recargapay.dto.AppDTO;
 import com.recargapay.service.IWalletService;
-import com.recargapay.service.WalletService;
 import com.recargapay.utils.ApiResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +20,7 @@ public class WalletController {
 
     @PostMapping("/create")
     public ApiResponse<AppDTO.WalletResponseDTO> createWallet(@RequestBody AppDTO.WalletRequestDTO requestDTO) {
-        logger.info(requestDTO);
+        logger.debug("******* Controller ********");
         return ApiResponse.success(walletService.createWallet(requestDTO), "Success");
     }
 

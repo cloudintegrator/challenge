@@ -9,3 +9,12 @@ Configuration:
       level: "INFO"
       AppenderRef:
         - ref: "ConsoleAppender"
+    Logger:
+      - name: "com.recargapay.service.WalletService"
+        level: "DEBUG"
+        AppenderRef:
+          - ref: "ConsoleAppender"
+      - name: "com.recargapay.controller.WalletController"
+        level: "DEBUG"
+        AppenderRef:
+          - ref: "ConsoleAppender"

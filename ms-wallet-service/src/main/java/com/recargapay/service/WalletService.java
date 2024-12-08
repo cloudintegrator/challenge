@@ -7,6 +7,8 @@ import com.recargapay.entity.WalletEntity;
 import com.recargapay.repository.TransactionRepository;
 import com.recargapay.repository.UserRepository;
 import com.recargapay.repository.WalletRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
 @Service
 public class WalletService implements IWalletService {
+    private static final Logger logger = LogManager.getLogger(WalletService.class);
+
     @Autowired
     private WalletRepository walletRepository;
 
@@ -26,6 +31,7 @@ public class WalletService implements IWalletService {
 
 
     public AppDTO.WalletResponseDTO createWallet(AppDTO.WalletRequestDTO requestDTO) {
+        logger.debug("********** Creating wallet with payload: " + requestDTO);
         WalletEntity walletEntity = WalletEntity.builder()
                 .amount(requestDTO.getAmount())
                 .build();
@@ -43,6 +49,7 @@ public class WalletService implements IWalletService {
     }
 
     public AppDTO.WalletResponseDTO getBalance(String userName) {
+        logger.debug("********** Checking balance for: " + userName);
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             AppDTO.WalletResponseDTO responseDTO = AppDTO.WalletResponseDTO.builder()
@@ -57,6 +64,7 @@ public class WalletService implements IWalletService {
     }
 
     public AppDTO.WalletResponseDTO getHistoricalBalance(String userName, LocalDate date) {
+        logger.debug("********** Creating historical balance for: " + userName + " for date: " + date.toString());
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             List<TransactionEntity> transactionEntities = transactionRepository.findByUserAndDate(userEntity.getId(), date);
@@ -69,6 +77,7 @@ public class WalletService implements IWalletService {
     }
 
     public AppDTO.WalletResponseDTO depositFunds(String userName, double amount) {
+        logger.debug("********** Depositing funds for: " + userName + " with value: " + amount);
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             WalletEntity walletEntity = userEntity.getWalletEntity();
@@ -90,6 +99,7 @@ public class WalletService implements IWalletService {
 
     @Transactional
     public void withdrawFunds(String userName, double amount) {
+        logger.debug("********** Withdrawing amount of " + amount + " from: " + userName);
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (null != userEntity) {
             WalletEntity walletEntity = userEntity.getWalletEntity();
@@ -106,6 +116,7 @@ public class WalletService implements IWalletService {
 
     @Transactional
     public AppDTO.WalletResponseDTO transferFunds(String senderUser, String receiverUser, double amount) {
+        logger.debug("********** Transferring");
         UserEntity senderUserEntity = userRepository.findByUserName(senderUser);
         UserEntity receiverUserEntity = userRepository.findByUserName(receiverUser);
         AppDTO.WalletResponseDTO responseDTO = null;
