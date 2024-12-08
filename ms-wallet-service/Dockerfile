@@ -1,11 +1,12 @@
 # Use a base image with Java installed
-FROM eclipse-temurin:17-jdk-alpine
+FROM openjdk:24-ea-17-slim-bullseye
+
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the Spring Boot JAR file into the container
-COPY build/libs/ms-wallet-service-0.0.1.jar app.jar
+COPY build/libs/ms-wallet-service-1.0.0.jar app.jar
 
 # Expose the application's port (e.g., 8080)
 EXPOSE 8080
