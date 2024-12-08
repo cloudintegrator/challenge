@@ -1,4 +1,4 @@
-package com.recargapay.entity.entity;
+package com.recargapay.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

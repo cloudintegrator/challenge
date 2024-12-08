@@ -1,4 +1,4 @@
-package com.recargapay.entity.dto;
+package com.recargapay.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.recargapay.entity.utils;
+package com.recargapay.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

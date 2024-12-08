@@ -1,14 +1,16 @@
-package com.recargapay.entity;
-import com.recargapay.entity.entity.TransactionEntity;
-import com.recargapay.entity.entity.UserEntity;
-import com.recargapay.entity.entity.WalletEntity;
-import com.recargapay.entity.repository.TransactionRepository;
-import com.recargapay.entity.repository.UserRepository;
+package com.recargapay;
+import com.recargapay.entity.TransactionEntity;
+import com.recargapay.entity.UserEntity;
+import com.recargapay.entity.WalletEntity;
+import com.recargapay.repository.TransactionRepository;
+import com.recargapay.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,10 +44,13 @@ public class TransactionRepositoryTest {
 
         // Create a transaction entity associated with the sender and receiver
         TransactionEntity transaction = TransactionEntity.builder()
-                .date(LocalDateTime.now())
+                .date(LocalDate.now())
+                .time(LocalTime.now())
                 .amount(100.0)
                 .senderEntity(sender)
+                .senderBalance(200.0)
                 .receiverEntity(receiver)
+                .receiverBalance(200.0)
                 .build();
 
         transactionRepository.save(transaction);

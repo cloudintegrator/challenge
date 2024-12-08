@@ -1,8 +1,8 @@
-package com.recargapay.entity;
+package com.recargapay;
 
-import com.recargapay.entity.entity.UserEntity;
-import com.recargapay.entity.entity.WalletEntity;
-import com.recargapay.entity.repository.UserRepository;
+import com.recargapay.entity.UserEntity;
+import com.recargapay.entity.WalletEntity;
+import com.recargapay.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

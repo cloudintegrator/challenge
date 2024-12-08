@@ -1,8 +1,7 @@
 package com.recargapay.controller;
 
-import com.recargapay.entity.controller.WalletController;
-import com.recargapay.entity.dto.AppDTO;
-import com.recargapay.entity.service.WalletService;
+import com.recargapay.dto.AppDTO;
+import com.recargapay.service.WalletService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -84,7 +82,7 @@ public class WalletControllerTest {
     void testGetHistoricalBalance() throws Exception {
         // Act & Assert
         mockMvc.perform(get("/api/wallet/testUser/historical-balance")
-                        .param("dateTime", "2024-12-06T10:00:00"))
+                        .param("date", "2024-12-06"))
                 .andExpect(status().isOk());
     }
 
