@@ -35,6 +35,7 @@ public class WalletControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(walletController).build();
     }
 
+    private final String BASE_URL="/api/v1/wallet";
     @Test
     void testCreateWallet() throws Exception {
         // Arrange
@@ -52,7 +53,7 @@ public class WalletControllerTest {
         when(walletService.createWallet(any(AppDTO.WalletRequestDTO.class))).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(post("/api/wallet/create")
+        mockMvc.perform(post(BASE_URL+"/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"userName\": \"testUser\", \"email\": \"test@example.com\", \"amount\": 1000.0}"))
                 .andExpect(status().isOk())
@@ -72,7 +73,7 @@ public class WalletControllerTest {
         when(walletService.getBalance("testUser")).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(get("/api/wallet/testUser/balance"))
+        mockMvc.perform(get(BASE_URL+"/testUser/balance"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.userName").value("testUser"))
                 .andExpect(jsonPath("$.data.amount").value(1000.0))
@@ -82,7 +83,7 @@ public class WalletControllerTest {
     @Test
     void testGetHistoricalBalance() throws Exception {
         // Act & Assert
-        mockMvc.perform(get("/api/wallet/testUser/historical-balance")
+        mockMvc.perform(get(BASE_URL+"/testUser/historical-balance")
                         .param("date", "2024-12-06"))
                 .andExpect(status().isOk());
     }
@@ -102,7 +103,7 @@ public class WalletControllerTest {
         when(walletService.depositFunds("testUser", 500.0)).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(post("/api/wallet/testUser/deposit")
+        mockMvc.perform(post(BASE_URL+"/testUser/deposit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"userName\": \"testUser\", \"amount\": 500.0}"))
                 .andExpect(status().isOk())
@@ -119,7 +120,7 @@ public class WalletControllerTest {
                 .build();
 
         // Act & Assert
-        mockMvc.perform(post("/api/wallet/testUser/withdraw")
+        mockMvc.perform(post(BASE_URL+"/testUser/withdraw")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"userName\": \"testUser\", \"amount\": 500.0}"))
                 .andExpect(status().isOk());
@@ -141,7 +142,7 @@ public class WalletControllerTest {
         when(walletService.transferFunds("testUser", "receiverUser", 500.0)).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(post("/api/wallet/transfer")
+        mockMvc.perform(post(BASE_URL+"/transfer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"senderUserName\": \"testUser\", \"receiverUserName\": \"receiverUser\", \"amount\": 500.0}"))
                 .andExpect(status().isOk())
