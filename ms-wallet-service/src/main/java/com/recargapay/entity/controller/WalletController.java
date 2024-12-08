@@ -3,7 +3,9 @@ package com.recargapay.entity.controller;
 import com.recargapay.entity.dto.AppDTO;
 import com.recargapay.entity.service.WalletService;
 import com.recargapay.entity.utils.ApiResponse;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;

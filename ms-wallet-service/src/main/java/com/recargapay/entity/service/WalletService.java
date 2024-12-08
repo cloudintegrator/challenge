@@ -7,7 +7,6 @@ import com.recargapay.entity.entity.WalletEntity;
 import com.recargapay.entity.repository.TransactionRepository;
 import com.recargapay.entity.repository.UserRepository;
 import com.recargapay.entity.repository.WalletRepository;
-import com.recargapay.entity.utils.CustomRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +51,7 @@ public class WalletService {
                     .build();
             return responseDTO;
         } else {
-            throw new CustomRuntimeException("User does not exist");
+            throw new RuntimeException("User does not exist");
         }
 
     }

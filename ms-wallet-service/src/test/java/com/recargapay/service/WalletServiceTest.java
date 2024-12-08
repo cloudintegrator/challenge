@@ -8,7 +8,6 @@ import com.recargapay.entity.repository.TransactionRepository;
 import com.recargapay.entity.repository.UserRepository;
 import com.recargapay.entity.repository.WalletRepository;
 import com.recargapay.entity.service.WalletService;
-import com.recargapay.entity.utils.CustomRuntimeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -92,7 +91,7 @@ public class WalletServiceTest {
         Throwable thrown = catchThrowable(() -> walletService.getBalance("nonExistingUser"));
 
         // Assert
-        assertThat(thrown).isInstanceOf(CustomRuntimeException.class).hasMessage("User does not exist");
+        assertThat(thrown).isInstanceOf(RuntimeException.class).hasMessage("User does not exist");
     }
 
     @Test
