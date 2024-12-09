@@ -1,9 +1,19 @@
 # How to run the application
 
 ## Run using docker
+There are 2 ways to run the application
+
+### Via docker
 ```
 docker pull anupamgogoi/ms-wallet-service:1.0.0
 docker run --name ws -d -p 8080:8080 anupamgogoi/ms-wallet-service:1.0.0
+```
+
+### Via Gralde
+Execute the below command
+```
+./gradlew bootRun
+
 ```
 
 ## Swagger endpoint
