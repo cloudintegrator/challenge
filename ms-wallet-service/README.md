@@ -1,18 +1,18 @@
-### How to run the application
+# How to run the application
 
-# Run using docker
+## Run using docker
 ```
 docker pull anupamgogoi/ms-wallet-service:1.0.0
 docker run --name ws -d -p 8080:8080 anupamgogoi/ms-wallet-service:1.0.0
 ```
 
-# Swagger endpoint
+## Swagger endpoint
 Access the below Swagger endpoint to access all the endpoints:
 ```
 http://localhost:8080/swagger-ui.html
 ```
 
-### Create wallet
+## Create wallet
 ```
 curl -X 'POST' \
   'http://localhost:8080/api/v1/wallet/create' \
@@ -25,14 +25,14 @@ curl -X 'POST' \
 }'
 ```
 userName and email must be unique. 
-### Check balance
+## Check balance
 ```
 curl -X 'GET' \
   'http://localhost:8080/api/v1/wallet/{userName}/balance' \
   -H 'accept: application/hal+json'
 ```
 
-### Deposit funds
+## Deposit funds
 ```
 curl -X 'POST' \
   'http://localhost:8080/api/v1/wallet/{userId}/deposit' \
@@ -42,4 +42,36 @@ curl -X 'POST' \
   "userName": "agogoi",
   "amount": 1000
 }'
+```
+
+## Withdraw funds
+```
+curl -X 'POST' \
+  'http://localhost:8080/api/v1/wallet/{userId}/withdraw' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "userName": "agogoi",
+  "amount": 90
+}'
+```
+
+## Transfer funds
+```
+curl -X 'POST' \
+'http://localhost:8080/api/v1/wallet/transfer' \
+-H 'accept: application/hal+json' \
+-H 'Content-Type: application/json' \
+-d '{
+"senderUserName": "agogoi",
+"receiverUserName": "agogoi1",
+"amount": 5
+}'
+```
+
+## Historical funds
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/wallet/{userName}/balance' \
+  -H 'accept: application/hal+json'
 ```
