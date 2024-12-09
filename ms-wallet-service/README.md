@@ -10,6 +10,7 @@ docker run --name ws -d -p 8080:8080 anupamgogoi/ms-wallet-service:1.0.0
 ```
 
 ### Via Gradle
+
 Execute the below command
 ```
 ./gradlew bootRun
